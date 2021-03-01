@@ -17,7 +17,7 @@ fi
 
 function request_call() {
 	if [ $hasWget -eq 0 ]; then
-		echo $(wget --quiet --header="Authorization: token ${pr_token}" -O - $1)
+		echo $(wget --quiet -O - $1)
 	elif [ $hasCurl -eq 0 ]; then
 		echo $(curl -skH "Authorization: token ${pr_token}" $1)
 	fi
