@@ -104,12 +104,12 @@ for i in data:
 		break
 """ 2>/dev/null)
 
-if [ -z "$head_sha" ]; then
-	echo "---> The specified PR #$pr_number has no longer any artifacts."
-	echo "---> It may be older than 14 days. Ask the PR creator to recreate the artifacts at the following URL:"
-	echo "---> https://github.com/hyperion-project/hyperion.ng/pull/$pr_number"
-	exit 1
-fi
+# if [ -z "$head_sha" ]; then
+# 	echo "---> The specified PR #$pr_number has no longer any artifacts."
+# 	echo "---> It may be older than 14 days. Ask the PR creator to recreate the artifacts at the following URL:"
+# 	echo "---> https://github.com/hyperion-project/hyperion.ng/pull/$pr_number"
+# 	exit 1
+# fi
 
 # Determine run_id from head_sha
 runs=$(request_call "$api_url/actions/runs")
@@ -123,12 +123,12 @@ for i in data['workflow_runs']:
 		break
 """ 2>/dev/null)
 
-if [ -z "$run_id" ]; then
-	echo "---> The specified PR #$pr_number has no longer any artifacts."
-	echo "---> It may be older than 14 days. Ask the PR creator to recreate the artifacts at the following URL:"
-	echo "---> https://github.com/hyperion-project/hyperion.ng/pull/$pr_number"
-	exit 1
-fi
+# if [ -z "$run_id" ]; then
+# 	echo "---> The specified PR #$pr_number has no longer any artifacts."
+# 	echo "---> It may be older than 14 days. Ask the PR creator to recreate the artifacts at the following URL:"
+# 	echo "---> https://github.com/hyperion-project/hyperion.ng/pull/$pr_number"
+# 	exit 1
+# fi
 
 # Get archive_download_url from workflow
 artifacts=$(request_call "$api_url/actions/runs/$run_id/artifacts")
@@ -142,17 +142,17 @@ for i in data['artifacts']:
 		break
 """ 2>/dev/null)
 
-if [ -z "$archive_download_url" ]; then
-	echo "---> The specified PR #$pr_number has no longer any artifacts."
-	echo "---> It may be older than 14 days. Ask the PR creator to recreate the artifacts at the following URL:"
-	echo "---> https://github.com/hyperion-project/hyperion.ng/pull/$pr_number"
-	exit 1
-fi
+# if [ -z "$archive_download_url" ]; then
+# 	echo "---> The specified PR #$pr_number has no longer any artifacts."
+# 	echo "---> It may be older than 14 days. Ask the PR creator to recreate the artifacts at the following URL:"
+# 	echo "---> https://github.com/hyperion-project/hyperion.ng/pull/$pr_number"
+# 	exit 1
+# fi
 
 # Download packed PR artifact
 echo "---> Downloading the Pull Request #$pr_number"
 if [ $hasWget -eq 0 ]; then
-	wget --quiet --header="Authorization: token ${pr_token}" -O $HOME/temp.zip $archive_download_url
+	wget --quiet -O $HOME/temp.zip $archive_download_url
 elif [ $hasCurl -eq 0 ]; then
 	curl -skH "Authorization: token $pr_token" -o $HOME/temp.zip -L --get $archive_download_url
 fi
